@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-
+import { toast } from "sonner"
 
 export default function Login() {
 
@@ -65,7 +65,9 @@ export default function Login() {
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" onClick={()=>{
+            toast("عملیات با موفقیت انجام شد")
+          }}>
             ورود
           </Button>
           

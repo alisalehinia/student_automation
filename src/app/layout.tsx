@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header/Header";
 import SidebarLayout from "@/components/layout";
 
-
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: {
@@ -52,6 +52,7 @@ export default function RootLayout({
             <Header />
             <SidebarLayout />
             {children}
+            <Toaster />
           </ThemeProvider>
       </body>
     </html>

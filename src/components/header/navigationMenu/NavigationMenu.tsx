@@ -16,7 +16,7 @@ import {
 
 export default function NavigationMenuComp() {
   return (
-    <NavigationMenu viewport={false} dir="rtl">
+    <NavigationMenu viewport={false} dir="rtl" >
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="flex-row items-center justify-between gap-4">
