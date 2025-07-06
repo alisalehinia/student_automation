@@ -7,8 +7,35 @@ import SidebarLayout from "@/components/layout";
 
 
 export const metadata: Metadata = {
-  title: "سیستم مدیریت اموزش",
-  description: "مدیریت اموزش",
+  title: {
+    default: "سیستم مدیریت آموزش",
+    template: "%s | سیستم مدیریت آموزش",
+  },
+  description: "پنل مدیریت آموزش برای مشاهده کلاس‌ها، مدرسین و خرید کتاب",
+  keywords: ["آموزش", "سیستم آموزشی", "کلاس آنلاین", "مدرسین", "کتاب", "سامانه آموزشی"],
+  authors: [{ name: "نام شما یا شرکت", url: "https://yourdomain.com" }],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
+  alternates: {
+    canonical: "https://yourdomain.com/",
+  },
+  openGraph: {
+    title: "سیستم مدیریت آموزش",
+    description: "مشاهده کلاس‌ها، خرید کتاب، مدیریت حساب و بیشتر",
+    url: "https://yourdomain.com",
+    siteName: "سیستم مدیریت آموزش",
+    locale: "fa_IR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "سیستم مدیریت آموزش",
+    description: "مدیریت کلاس‌ها، مدرسین و محتواهای آموزشی با یک سامانه مدرن.",
+    site: "@YourTwitterHandle", 
+  },
 };
 
 export default function RootLayout({
