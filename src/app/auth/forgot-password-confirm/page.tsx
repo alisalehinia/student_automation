@@ -11,7 +11,7 @@ import { AnimatePresence,motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function ForgotPassword () {
+export default function ForgotPasswordConfirm () {
 
     const pathname = usePathname();
     const router = useRouter();
@@ -33,7 +33,7 @@ export default function ForgotPassword () {
         }=useMutation({
             mutationFn: forgotPassword,
             onSuccess: () => {
-                    // router.push('/auth/show-info-for-next-step')
+                    
             },
             onError: () => {
 
@@ -55,9 +55,9 @@ export default function ForgotPassword () {
         >
         <Card className="w-full max-w-sm m-auto shadow-2xl">
             <CardHeader>
-            <CardTitle>بازیابی رمز</CardTitle>
+            <CardTitle>تایید کد</CardTitle>
             <CardDescription>
-                برای بازیابی رمزعبور کدملی خود را وارد کنید.
+                رمز عبور جدید را واردکنید
             </CardDescription>
             </CardHeader>
             <CardContent className="relative">
@@ -74,7 +74,7 @@ export default function ForgotPassword () {
                 type="submit" 
                 className="w-full " 
                 disabled={status === "pending"}
-                text={'ارسال'} 
+                text={'تایید'} 
                 showLoading={status === "pending"}
                 />
             </form>

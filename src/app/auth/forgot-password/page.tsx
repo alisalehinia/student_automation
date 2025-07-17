@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ورود به سیستم آموزشی",
     description: "با ورود به حساب خود، به کلاس‌ها و اطلاعات آموزشی دسترسی پیدا کنید.",
-    url: "https://yourdomain.com/login",
+    url: "https://yourdomain.com/auth/forgot-password",
     siteName: "سیستم مدیریت آموزش",
     locale: "fa_IR",
     type: "website",

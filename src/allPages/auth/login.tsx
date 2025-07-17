@@ -25,7 +25,7 @@ import FormInput from "@/components/customComponents/formInput";
 
 export default function Login() {
   const pathname = usePathname();
-const router = useRouter();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -89,7 +89,7 @@ const router = useRouter();
                 type="password"
                 showForgotPassword
                 onForgotPassword={()=>{
-                  //call api for sms
+                  router.push('/auth/forgot-password')
                 }}
               />
               <CustomButton  
