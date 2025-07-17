@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import Login from "@/allPages/auth/login"
 
 export const metadata: Metadata = {
-  title: "ورود | سیستم مدیریت آموزش",
+  title: "ورود ",
   description: "صفحه ورود به پنل کاربری سیستم مدیریت آموزش",
   keywords: ["ورود", "حساب کاربری", "سیستم آموزشی", "login"],
   robots: "noindex, nofollow", 

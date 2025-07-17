@@ -7,9 +7,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import routes from "@/constants/routes";
+import { XIcon } from "lucide-react";
 
 const sidebarItems = [
   routes.profile,
@@ -34,6 +36,13 @@ export default function AppSidebar() {
       "
     >
       <SidebarContent>
+        <div className="flex justify-end p-2">
+          <SidebarTrigger>
+            <button className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-slate-900 transition">
+              <XIcon className="w-5 h-5" />
+            </button>
+          </SidebarTrigger>
+        </div>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>

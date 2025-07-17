@@ -13,9 +13,7 @@ export default function SidebarLayout() {
         <AppSidebar />
           <div className="md:hidden p-2 absolute top-3 right-1 z-10">
             <SidebarTrigger >
-              <Button variant="outline" className="h-20 w-20 p-0">
-                <MenuIcon size={32} />
-              </Button>
+                <MenuIcon className="w-6 h-6" />
             </SidebarTrigger>
         </div>
       </div>

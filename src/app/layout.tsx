@@ -5,6 +5,7 @@ import Header from "@/components/header/Header";
 import SidebarLayout from "@/components/layout";
 
 import { Toaster } from "@/components/ui/sonner"
+import { Providers } from "@/lib/providers";
 
 export const metadata: Metadata = {
   title: {
@@ -49,10 +50,12 @@ export default function RootLayout({
        className="w-screen  overflow-x-hidden "
       >
           <ThemeProvider>
-            <Header />
-            <SidebarLayout />
-            {children}
-            <Toaster />
+            <Providers>
+              <Header />
+              <SidebarLayout />
+              {children}
+              <Toaster />
+            </Providers>
           </ThemeProvider>
       </body>
     </html>

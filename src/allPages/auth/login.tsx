@@ -11,82 +11,94 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
 import { toast } from "sonner"
-
 import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { LoginSchemaType, loginSchema } from "@/lib/validation/auth";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/services/api/auth";
+import CustomButton from "@/components/customComponents/CustomButton";
+import FormInput from "@/components/customComponents/formInput";
+
 
 export default function Login() {
   const pathname = usePathname();
-  
+const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const {
+    mutate,
+    status
+  } = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      const { access_token, refresh_token, role } = data.data;
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
+      localStorage.setItem("role", role);
+      router.push("/dashboard");
+    },
+    onError: (error: any) => {
+    },
+  });
+
+  const onSubmit = (data: LoginSchemaType) => {
+    mutate(data);
+  };
+
+ 
   return (
-    <div className="w-full h-screen 
-    flex justify-center items-center
-   relative
-    max-w-screen
-    overflow-x-hidden
-    ">
-      <div className="absolute border-2 top-[50%] right-[10%] h-[200px] w-[200px] rounded-2xl hidden md:block -rotate-12 shadow-lg -z-10 " />
-      <div className="absolute border-2 top-[30%] right-[20%] h-[120px] w-[120px] rounded-2xl hidden md:block rotate-12 shadow-lg -z-10" />
-      <div className="absolute border-2 top-[50%] right-[50%] h-[300px] w-[300px] rounded-2xl hidden md:block rotate-6 shadow-lg -z-10" />
-      <div className="absolute border-2 top-[0%] right-[80%] h-[400px] w-[400px] rounded-2xl hidden md:block rotate-45 shadow-lg -z-10" />
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={pathname}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className="w-full"
-        >
-          <Card className="w-full max-w-sm m-auto shadow-2xl ">
-            <CardHeader>
-              <CardTitle>ورود</CardTitle>
-              <CardDescription>
-                برای ورود به حساب کاربری شماره موبایل خود را وارد کنید.
-              </CardDescription>
-              <CardAction>
-                <Button variant="link">ثبت نام</Button>
-              </CardAction>
-            </CardHeader>
-            <CardContent>
-              <form>
-                <div className="flex flex-col gap-6">
-                  <div className="grid gap-2">
-                    <Label htmlFor="phone">شماره موبایل</Label>
-                    <Input
-                      id="phone"
-                      type="phone"
-                      placeholder="...09"
-                      required
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <div className="flex items-center">
-                      <Label htmlFor="password">رمز عبور</Label>
-                      <a
-                        href="#"
-                        className="mr-auto inline-block text-sm underline-offset-4 hover:underline"
-                      >
-                        فراموشی؟                </a>
-                    </div>
-                    <Input id="password" type="password" required />
-                  </div>
-                </div>
-              </form>
-            </CardContent>
-            <CardFooter className="flex-col gap-2">
-              <Button type="submit" className="w-full" onClick={()=>{
-                toast("عملیات با موفقیت انجام شد")
-              }}>
-                ورود
-              </Button>
-              
-            </CardFooter>
-          </Card>
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  )
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={pathname}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
+        className="w-full"
+      >
+        <Card className="w-full max-w-sm m-auto shadow-2xl">
+          <CardHeader>
+            <CardTitle>ورود</CardTitle>
+            <CardDescription>
+              برای ورود به حساب کاربری کدملی خود را وارد کنید.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <FormInput 
+                id="id_number"
+                label="کدملی"
+                register={register("id_number")}
+                error={errors.id_number}
+              />
+              <FormInput 
+                id="password"
+                label="رمزعبور"
+                register={register("password")}
+                error={errors.password}
+                type="password"
+              />
+              <CustomButton  
+                type="submit" 
+                className="w-full" 
+                disabled={status === "pending"}
+                text={'ورود'} 
+                showLoading={status === "pending"}
+              />
+            </form>
+          </CardContent>
+          <CardFooter />
+        </Card>
+      </motion.div>
+    </AnimatePresence>
+  );
 }
