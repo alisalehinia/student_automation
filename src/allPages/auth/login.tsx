@@ -72,13 +72,14 @@ const router = useRouter();
               برای ورود به حساب کاربری کدملی خود را وارد کنید.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <FormInput 
                 id="id_number"
                 label="کدملی"
                 register={register("id_number")}
                 error={errors.id_number}
+                className="mb-10"
               />
               <FormInput 
                 id="password"
@@ -86,10 +87,14 @@ const router = useRouter();
                 register={register("password")}
                 error={errors.password}
                 type="password"
+                showForgotPassword
+                onForgotPassword={()=>{
+                  //call api for sms
+                }}
               />
               <CustomButton  
                 type="submit" 
-                className="w-full" 
+                className="w-full " 
                 disabled={status === "pending"}
                 text={'ورود'} 
                 showLoading={status === "pending"}

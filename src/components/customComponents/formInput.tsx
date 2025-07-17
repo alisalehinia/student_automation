@@ -11,8 +11,12 @@ type formInputProps = {
     label: string,
     type?: string,
     register: UseFormRegisterReturn,
-    error?: FieldError
+    error?: FieldError,
+    className?: string,
+    showForgotPassword?: boolean, // 🔹 اضافه کنید
+    onForgotPassword?: () => void // 🔹 اضافه کنید
 }
+
 
 export default function FormInput({
     id,
@@ -20,29 +24,47 @@ export default function FormInput({
     type = "text",
     register,
     error,
+    className,
+    showForgotPassword,
+    onForgotPassword
 }: formInputProps) {
 
     const [showPassword, setShowPassword] = useState(false);
     const isPasswordField = type === "password";
 
     return (
-        <div className="grid gap-2 relative">
-            <Label htmlFor={id}>{label}</Label>
-            <Input 
-                id={id} 
-                type={isPasswordField ? (showPassword ? "text" : "password") : type}
-                {...register}
-             />
-                {isPasswordField && (
+        <div className={`grid gap-2 ${className}`}>
+           <div className="relative">
+            <div className="flex items-center justify-between mb-2">
+                <Label htmlFor={id}>{label}</Label>
+                {showForgotPassword && (
                 <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute  left-3 bottom-2.5 flex items-center text-gray-500 hover:text-gray-800"
-                    tabIndex={-1}
+                    onClick={onForgotPassword}
+                    className="text-xs text-blue-600 dark:text-blue-100 hover:underline"
                 >
-                    {!showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    فراموشی رمز؟
                 </button>
                 )}
+            </div>
+            <Input
+                id={id}
+                type={isPasswordField ? (showPassword ? "text" : "password") : type}
+                {...register}
+            />
+            {isPasswordField && (
+                <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute left-3 bottom-2 flex items-center text-gray-500 hover:text-gray-800"
+                tabIndex={-1}
+                >
+                {!showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+            )}
+            </div>
+
+
                 <AnimatePresence mode="wait" initial={false}>
                     {
                         error?.message && 
