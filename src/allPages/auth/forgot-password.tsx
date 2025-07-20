@@ -3,6 +3,7 @@
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
 import { ForgoPasswordSchemaType, forgotPasswordSchema } from "@/lib/validation/auth";
 import { forgotPassword } from "@/services/api/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,8 @@ import { useForm } from "react-hook-form";
 
 export default function ForgotPassword () {
 
+    useRedirectIfAuthenticated();
+    
     const pathname = usePathname();
     const router = useRouter();
 

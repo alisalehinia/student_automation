@@ -21,9 +21,13 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "@/services/api/auth";
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
+import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
 
 
 export default function Login() {
+  
+  useRedirectIfAuthenticated();
+
   const pathname = usePathname();
   const router = useRouter();
   const {
