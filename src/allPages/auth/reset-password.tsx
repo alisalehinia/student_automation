@@ -20,6 +20,7 @@ import { useMutation } from "@tanstack/react-query";
 import { resetPassword } from "@/services/api/auth";
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
+import routes from "@/constants/routes";
 
 
 export default function ResetPassword() {
@@ -39,7 +40,7 @@ export default function ResetPassword() {
     } = useMutation({
         mutationFn: resetPassword,
         onSuccess: (data)=>{
-            router.push("/dashboard");
+            router.push(routes.home.url);
         },
         onError: (error : any) =>{
         }

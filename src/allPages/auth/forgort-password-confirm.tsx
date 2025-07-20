@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence,motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import routes from "@/constants/routes";
 
 type ForgotPasswordConfirmType = {
   params: {
@@ -25,7 +26,7 @@ export default function ForgotPasswordConfirm ({params}: ForgotPasswordConfirmTy
     const loginZustand = useAuthStore((state) => state.login);
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
     if(!isLoggedIn) {
-        router.push('/auth/login')
+        router.push(routes.login.url)
     }
     const {
         register,
@@ -46,7 +47,7 @@ export default function ForgotPasswordConfirm ({params}: ForgotPasswordConfirmTy
             onSuccess: (data) => {
               const { access_token, refresh_token, role } = data.data;
               loginZustand(access_token, refresh_token, role);
-              router.push("/dashboard");
+              router.push(routes.home.url);
             },
             onError: () => {
 

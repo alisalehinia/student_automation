@@ -1,3 +1,4 @@
+'use client';
 import { ThemeToggle } from "@/components/ToggleTheme";
 import {
   Sidebar,
@@ -12,17 +13,28 @@ import {
 import Link from "next/link";
 import routes from "@/constants/routes";
 import { XIcon } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
+import { useEffect } from "react";
 
-const sidebarItems = [
-  routes.profile,
-  routes.home,
-  routes.todayClasses,
-  routes.allClasses,
-  routes.teachers,
-  routes.booksForSale,
-];
 
 export default function AppSidebar() {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+    const checkAuth = useAuthStore((state) => state.checkAuth);
+
+    useEffect(() => {
+      checkAuth(); 
+    }, []);
+
+  const sidebarItems = [
+    (isLoggedIn ? routes.profile : routes.login),
+    routes.home,
+    routes.todayClasses,
+    routes.allClasses,
+    routes.teachers,
+    routes.booksForSale,
+  ];
+  
+
   return (
     <Sidebar
       className="

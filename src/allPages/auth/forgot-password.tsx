@@ -3,6 +3,7 @@
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import routes from "@/constants/routes";
 import { ForgoPasswordSchemaType, forgotPasswordSchema } from "@/lib/validation/auth";
 import { forgotPassword } from "@/services/api/auth";
 import { useAuthStore } from "@/store/authStore";
@@ -17,7 +18,7 @@ export default function ForgotPassword () {
     const router = useRouter();
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
     if(!isLoggedIn) {
-        router.push('/auth/login')
+        router.push(routes.login.url)
     }
     const pathname = usePathname();
 
@@ -39,7 +40,7 @@ export default function ForgotPassword () {
             mutationFn: forgotPassword,
             onSuccess: (_, variables) => {
                 localStorage.setItem("id_number", variables.id_number); 
-                router.push('/auth/wait-for-sms')
+                router.push(routes.waitForSms.url)
             },
             onError: () => {
 

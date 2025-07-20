@@ -22,6 +22,7 @@ import { login } from "@/services/api/auth";
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
 import { useAuthStore } from "@/store/authStore";
+import routes from "@/constants/routes";
 
 
 export default function Login() {
@@ -30,10 +31,7 @@ export default function Login() {
 
   const pathname = usePathname();
   const router = useRouter();
-  // const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  //   if(!isLoggedIn) {
-  //       router.push('/auth/login')
-  //   }
+
   const {
     register,
     handleSubmit,
@@ -50,7 +48,7 @@ export default function Login() {
     onSuccess: (data) => {
       const { access_token, refresh_token, role } = data.data;
       loginZustand(access_token, refresh_token, role);
-      router.push("/dashboard");
+      router.push(routes.home.url);
     },
     onError: (error: any) => {
     },
@@ -95,7 +93,7 @@ export default function Login() {
                 type="password"
                 showForgotPassword
                 onForgotPassword={()=>{
-                  router.push('/auth/forgot-password')
+                  router.push(routes.forgotPassword.url)
                 }}
               />
               <CustomButton  

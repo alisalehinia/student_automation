@@ -15,6 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import routes from "@/constants/routes";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 
@@ -35,8 +36,8 @@ export default function DropdownMenuProfile() {
 
         {/* گروه نخست: امکانات پرکاربرد دانش‌آموز */}
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={()=>router.push('/manager-panel')} >
-            پروفایل من
+          <DropdownMenuItem onClick={()=>router.push(routes.profile.url)} >
+           پنل
             <DropdownMenuShortcut className="mr-auto ml-1">⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
 
@@ -96,7 +97,7 @@ export default function DropdownMenuProfile() {
         <DropdownMenuItem onClick={()=>{
           logout();
           window.dispatchEvent(new Event("storage"));
-          router.push('/')
+          router.push(routes.home.url)
         }}>
           خروج
           <DropdownMenuShortcut className="mr-auto ml-1">⌘Q</DropdownMenuShortcut>
