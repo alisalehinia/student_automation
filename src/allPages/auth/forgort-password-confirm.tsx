@@ -38,8 +38,12 @@ export default function ForgotPasswordConfirm ({params}: ForgotPasswordConfirmTy
             mutate
         }=useMutation({
             mutationFn: forgotPasswordConfirm,
-            onSuccess: () => {
-                    
+            onSuccess: (data) => {
+              const { access_token, refresh_token, role } = data.data;
+              localStorage.setItem("access_token", access_token);
+              localStorage.setItem("refresh_token", refresh_token);
+              localStorage.setItem("role", role);
+              router.push("/dashboard");
             },
             onError: () => {
 
