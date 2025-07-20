@@ -21,15 +21,19 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "@/services/api/auth";
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
-import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
+import { useAuthStore } from "@/store/authStore";
 
 
 export default function Login() {
   
-  useRedirectIfAuthenticated();
+  const loginZustand = useAuthStore((state) => state.login);
 
   const pathname = usePathname();
   const router = useRouter();
+  // const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  //   if(!isLoggedIn) {
+  //       router.push('/auth/login')
+  //   }
   const {
     register,
     handleSubmit,
@@ -45,9 +49,7 @@ export default function Login() {
     mutationFn: login,
     onSuccess: (data) => {
       const { access_token, refresh_token, role } = data.data;
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("refresh_token", refresh_token);
-      localStorage.setItem("role", role);
+      loginZustand(access_token, refresh_token, role);
       router.push("/dashboard");
     },
     onError: (error: any) => {

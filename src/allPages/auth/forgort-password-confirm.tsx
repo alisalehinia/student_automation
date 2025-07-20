@@ -3,8 +3,9 @@
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ForgoPasswordSchemaType, ForgotPasswordConfirmSchemaType, forgotPasswordConfirmSchema, forgotPasswordSchema } from "@/lib/validation/auth";
-import { forgotPassword, forgotPasswordConfirm } from "@/services/api/auth";
+import { ForgotPasswordConfirmSchemaType, forgotPasswordConfirmSchema, forgotPasswordSchema } from "@/lib/validation/auth";
+import {  forgotPasswordConfirm } from "@/services/api/auth";
+import { useAuthStore } from "@/store/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence,motion } from "framer-motion";
@@ -21,7 +22,11 @@ export default function ForgotPasswordConfirm ({params}: ForgotPasswordConfirmTy
 
     const pathname = usePathname();
     const router = useRouter();
-
+    const loginZustand = useAuthStore((state) => state.login);
+    const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+    if(!isLoggedIn) {
+        router.push('/auth/login')
+    }
     const {
         register,
         handleSubmit,
@@ -40,9 +45,7 @@ export default function ForgotPasswordConfirm ({params}: ForgotPasswordConfirmTy
             mutationFn: forgotPasswordConfirm,
             onSuccess: (data) => {
               const { access_token, refresh_token, role } = data.data;
-              localStorage.setItem("access_token", access_token);
-              localStorage.setItem("refresh_token", refresh_token);
-              localStorage.setItem("role", role);
+              loginZustand(access_token, refresh_token, role);
               router.push("/dashboard");
             },
             onError: () => {

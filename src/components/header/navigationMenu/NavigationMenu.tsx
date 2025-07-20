@@ -18,39 +18,7 @@ export default function NavigationMenuComp() {
   return (
     <NavigationMenu viewport={false} dir="rtl" >
       <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="flex-row items-center justify-between gap-4">
-            {routes.todayClasses.name}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3 gap-1">
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={routes.todayClasses.url}
-                    className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                  >
-                    <div className="mt-4 mb-2 text-lg font-medium">
-                      {routes.todayClasses.name}
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-tight">
-                      لیست کلاس‌هایی که امروز برگزار می‌شوند.
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="مقدمه">
-                کامپوننت‌های قابل استفادهٔ مجدد با Radix UI و Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="نصب">
-                راهنمای نصب وابستگی‌ها و ساختاردهی پروژه.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="تایپوگرافی">
-                سبک‌های تیتر، پاراگراف، لیست و ...
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+       
         <NavigationMenuItem>
           <NavigationMenuTrigger className="flex-row items-center justify-between gap-4">
             {routes.allClasses.name}

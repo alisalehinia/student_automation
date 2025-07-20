@@ -3,9 +3,9 @@
 import CustomButton from "@/components/customComponents/CustomButton";
 import FormInput from "@/components/customComponents/formInput";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
 import { ForgoPasswordSchemaType, forgotPasswordSchema } from "@/lib/validation/auth";
 import { forgotPassword } from "@/services/api/auth";
+import { useAuthStore } from "@/store/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence,motion } from "framer-motion";
@@ -13,11 +13,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function ForgotPassword () {
-
-    useRedirectIfAuthenticated();
-    
-    const pathname = usePathname();
+   
     const router = useRouter();
+    const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+    if(!isLoggedIn) {
+        router.push('/auth/login')
+    }
+    const pathname = usePathname();
 
     const {
         register,

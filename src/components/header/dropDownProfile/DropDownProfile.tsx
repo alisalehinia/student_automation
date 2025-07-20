@@ -15,11 +15,13 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 
 export default function DropdownMenuProfile() {
 
   const router = useRouter();
+  const logout = useAuthStore((state) => state.logout);
 
   return (
     <DropdownMenu dir="rtl">
@@ -33,7 +35,7 @@ export default function DropdownMenuProfile() {
 
         {/* گروه نخست: امکانات پرکاربرد دانش‌آموز */}
         <DropdownMenuGroup>
-          <DropdownMenuItem >
+          <DropdownMenuItem onClick={()=>router.push('/manager-panel')} >
             پروفایل من
             <DropdownMenuShortcut className="mr-auto ml-1">⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -92,10 +94,9 @@ export default function DropdownMenuProfile() {
 
         {/* خروج */}
         <DropdownMenuItem onClick={()=>{
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          localStorage.removeItem("role");
-          router.push('/auth/login')
+          logout();
+          window.dispatchEvent(new Event("storage"));
+          router.push('/')
         }}>
           خروج
           <DropdownMenuShortcut className="mr-auto ml-1">⌘Q</DropdownMenuShortcut>
