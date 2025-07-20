@@ -1,6 +1,4 @@
-
-
-
+'use client';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,8 +15,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation";
 
 export default function DropdownMenuProfile() {
+
+  const router = useRouter();
+
   return (
     <DropdownMenu dir="rtl">
       <DropdownMenuTrigger asChild>
@@ -89,7 +91,12 @@ export default function DropdownMenuProfile() {
         <DropdownMenuSeparator />
 
         {/* خروج */}
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={()=>{
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("role");
+          router.push('/auth/login')
+        }}>
           خروج
           <DropdownMenuShortcut className="mr-auto ml-1">⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
