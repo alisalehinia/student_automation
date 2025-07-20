@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { ChangeEvent } from "react";
 
 type formInputProps = {
     id: string,
@@ -13,10 +14,13 @@ type formInputProps = {
     register: UseFormRegisterReturn,
     error?: FieldError,
     className?: string,
-    showForgotPassword?: boolean, // 🔹 اضافه کنید
-    onForgotPassword?: () => void // 🔹 اضافه کنید
+    showForgotPassword?: boolean, 
+    onForgotPassword?: () => void 
 }
 
+function convertPersianDigitsToEnglish(value: string): string {
+    return value.replace(/[۰-۹]/g, (w) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(w)));
+  }
 
 export default function FormInput({
     id,
@@ -32,6 +36,12 @@ export default function FormInput({
     const [showPassword, setShowPassword] = useState(false);
     const isPasswordField = type === "password";
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const englishValue = convertPersianDigitsToEnglish(e.target.value);
+        e.target.value = englishValue;
+        register.onChange(e); 
+      };
+      
     return (
         <div className={`grid gap-2 ${className}`}>
            <div className="relative">
@@ -51,6 +61,7 @@ export default function FormInput({
                 id={id}
                 type={isPasswordField ? (showPassword ? "text" : "password") : type}
                 {...register}
+                onChange={handleChange}
             />
             {isPasswordField && (
                 <button

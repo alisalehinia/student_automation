@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body
-       className="w-screen  overflow-x-hidden "
+       className="w-screen   overflow-x-hidden "
       >
           <ThemeProvider>
             <Providers>

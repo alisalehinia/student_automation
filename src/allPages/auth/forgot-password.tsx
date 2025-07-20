@@ -35,8 +35,9 @@ export default function ForgotPassword () {
             mutate
         }=useMutation({
             mutationFn: forgotPassword,
-            onSuccess: () => {
-                    // router.push('/auth/show-info-for-next-step')
+            onSuccess: (_, variables) => {
+                localStorage.setItem("id_number", variables.id_number); 
+                router.push('/auth/wait-for-sms')
             },
             onError: () => {
 
