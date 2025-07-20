@@ -23,3 +23,11 @@ export const forgotPasswordSchema = z.object({
 })
 export type ForgoPasswordSchemaType = z.infer<typeof forgotPasswordSchema>; 
 
+export const forgotPasswordConfirmSchema = z.object({
+  new_password: z.string().nonempty('رمز عبور جدید را وارد کنید').min(8,'حداقل 8 کاراکتر'),
+  new_password_retype: z.string().nonempty('رمز عبور جدید را دوباره وارد کنید')
+}).refine((data)=>data.new_password === data.new_password_retype,{
+  message:'رمز عبور جدید همخوانی ندارد',
+  path:['new_password_retype']
+});
+export type ForgotPasswordConfirmSchemaType = z.infer<typeof forgotPasswordConfirmSchema>;

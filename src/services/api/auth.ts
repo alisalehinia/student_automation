@@ -1,5 +1,5 @@
 import axiosInstance from "./axios";
-import { ForgoPasswordSchemaType, LoginSchemaType, ResetPasswordSchemaType } from "@/lib/validation/auth";
+import { ForgoPasswordSchemaType, ForgotPasswordConfirmSchemaType, LoginSchemaType, ResetPasswordSchemaType } from "@/lib/validation/auth";
 
 
 
@@ -15,5 +15,16 @@ export const resetPassword = async (data: ResetPasswordSchemaType) =>{
 
 export const forgotPassword = async(data: ForgoPasswordSchemaType) => {
   const response = await axiosInstance.post("/auth/forgot-password", data);
+  return response;
+}
+
+export const forgotPasswordConfirm = async ({
+  data,
+  token,
+}: {
+  data: ForgotPasswordConfirmSchemaType;
+  token: string;
+}) =>{
+  const response = await axiosInstance.post(`/auth/forgot-password-confirm/${token}`,data);
   return response;
 }
