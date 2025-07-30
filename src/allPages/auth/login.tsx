@@ -1,17 +1,13 @@
 'use client';
-import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
+
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { LoginSchemaType, loginSchema } from "@/lib/validation/auth";
@@ -35,7 +31,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
@@ -50,8 +46,8 @@ export default function Login() {
       loginZustand(access_token, refresh_token, role);
       router.push(routes.home.url);
     },
-    onError: (error: any) => {
-    },
+    // onError: (error: any) => {
+    // },
   });
 
   const onSubmit = (data: LoginSchemaType) => {

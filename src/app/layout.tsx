@@ -7,6 +7,7 @@ import SidebarLayout from "@/components/layout";
 import { Toaster } from "@/components/ui/sonner"
 import { Providers } from "@/lib/providers";
 
+
 export const metadata: Metadata = {
   title: {
     default: "سیستم مدیریت آموزش",
