@@ -17,12 +17,13 @@ import {
   createStudentSchema,
   createStudentSchemaType,
 } from "@/lib/validation/students";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStudent } from "@/services/api/students";
 import JalaliDateInput from "./customComponents/JalaliDateInput";
 
 export default function CreateStudentModal() {
   const [open, setOpen] = useState(false);
+const queryClient = useQueryClient();
 
   const {
     register,
@@ -38,6 +39,7 @@ export default function CreateStudentModal() {
     onSuccess: (data) => {
       console.log("Student created successfully:", data);
       setOpen(false);
+      queryClient.invalidateQueries({ queryKey: ['students'] });
     },
   });
 
