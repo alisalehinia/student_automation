@@ -1,10 +1,11 @@
 "use client";
 
 import DatePicker from "react-multi-date-picker";
-import type { Value } from "react-multi-date-picker";
+import type { DatePickerRef, Value } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { Controller, Control, FieldError, FieldValues, Path } from "react-hook-form";
+import { useRef } from "react";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -19,14 +20,20 @@ export default function JalaliDateInput<T extends FieldValues>({
   control,
   error,
 }: Props<T>) {
+
+  const datePickerRef = useRef<DatePickerRef | null>(null);
+
   return (
-    <div className="grid gap-2">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="grid gap-1">
+      <label className="text-sm font-medium cursor-pointer"  onClick={() => datePickerRef.current?.openCalendar()}>{label}</label>
       <Controller
+    
         name={name}
         control={control}
         render={({ field }) => (
           <DatePicker
+            ref={datePickerRef}
+            inputClass="p-1.5 rounded-md w-full"
             calendar={persian}
             locale={persian_fa}
             format="YYYY/MM/DD"

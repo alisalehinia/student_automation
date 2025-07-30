@@ -70,22 +70,12 @@ export default function CreateStudentModal() {
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* <FormInput
-              id="birth_date"
-              label="تاریخ تولد"
-              register={register("birth_date")}
-              error={errors.birth_date}
-            /> */}
             <JalaliDateInput<createStudentSchemaType>
               name="birth_date"
               label="تاریخ تولد"
               control={control}
               error={errors.birth_date}
             />
-
-
-         
-
             <FormInput
               id="home_phone_number"
               label="شماره تلفن منزل"
