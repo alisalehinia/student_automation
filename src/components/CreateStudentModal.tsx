@@ -21,7 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStudent } from "@/services/api/students";
 import JalaliDateInput from "./customComponents/JalaliDateInput";
 
-export default function CreateStudentModal() {
+export default function CreateStudentModal({setSearch}: {setSearch: (params: string)=> void}) {
   const [open, setOpen] = useState(false);
 const queryClient = useQueryClient();
 
@@ -34,25 +34,29 @@ const queryClient = useQueryClient();
     resolver: zodResolver(createStudentSchema),
   });
 
-  const { mutate } = useMutation({
+
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: createStudent,
-    onSuccess: (data) => {
-      console.log("Student created successfully:", data);
+    onSuccess: () => {
       setOpen(false);
+      setSearch("");
       queryClient.invalidateQueries({ queryKey: ['students'] });
     },
   });
 
-  const onSubmit = (data: createStudentSchemaType) => {
-    mutate(data);
+  const onSubmit = async (data: createStudentSchemaType) => {
+
+   await mutateAsync(data);
+
   };
+console.log('isSubmitting',isSubmitting);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
-        <CustomButton text="ساخت دانش‌آموز جدید" type="button" />
+        <CustomButton className="font-medium text-2xl" text="+" type="button" />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent  className="max-h-[85vh] ">
         <DialogHeader>
           <DialogTitle>ایجاد دانش‌آموز</DialogTitle>
         </DialogHeader>
@@ -111,8 +115,8 @@ const queryClient = useQueryClient();
             type="submit"
             text="ایجاد دانش‌آموز"
             className="w-full"
-            disabled={isSubmitting}
-            showLoading={isSubmitting}
+            disabled={isPending}
+            showLoading={isPending}
           />
         </form>
       </DialogContent>

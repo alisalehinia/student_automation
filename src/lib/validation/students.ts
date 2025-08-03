@@ -1,16 +1,17 @@
 
 import {z} from 'zod';
 
-const nationalCodeRegex = /^[0-9]{10,12}$/;
+// const nationalCodeRegex = /^[0-9]{10,12}$/;
 
 export const createStudentSchema = z.object({
-    birth_date : z.date(),
-    full_name: z.string().nonempty('نام کامل را وادر کنید'),
-    home_phone_number: z.string().nonempty('تلفن منزل را وارد کنید'),
-    id_number: z.string().nonempty("کدملی راوارد کنید").regex(nationalCodeRegex, "کدملی باید عددی و بین ۱۰ تا ۱۲ رقم باشد"),
-    parent_phone_number: z.string().nonempty("شماره والدین را وارد کنید"),
-    password: z.string().min(8),
-    phone_number: z.string().min(11, 'شماره تلفن باید حداقل 11 رقم باشد').regex(/^[0-9]+$/, 'شماره تلفن باید عددی باشد'),
-})
+  birth_date: z.date( "تاریخ تولد الزامی است" ),
+  full_name: z.string().nonempty("نام کامل را وارد کنید"),
+  home_phone_number: z.string().regex(/^\d{8}$/, "تلفن منزل باید دقیقا 8 رقم عددی باشد"),
+  id_number: z.string().regex(/^\d{10,12}$/, "کد ملی باید عددی و بین 10 تا 12 رقم باشد"),
+  parent_phone_number: z.string().regex(/^\d{11}$/, "شماره والدین باید دقیقا 11 رقم باشد"),
+  phone_number: z.string().regex(/^\d{11}$/, "شماره تلفن باید دقیقا 11 رقم باشد"),
+  password: z.string().min(8, "رمز عبور باید حداقل 8 کاراکتر باشد"),
+});
+
 
 export type createStudentSchemaType = z.infer<typeof createStudentSchema>

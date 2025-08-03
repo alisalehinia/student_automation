@@ -7,9 +7,15 @@ export const createStudent = async (data: createStudentSchemaType) => {
   return response.data;
 }
 
-export const getStudents = async () => {
-  const response = await axiosInstance.get("/students");
-  console.log(response);
-  
+interface GetStudentsParams {
+  page: number;
+  size: number;
+  search: string;
+}
+
+export const getStudents = async ({page, size, search} : GetStudentsParams) => {
+  const response = await axiosInstance.get("/students", {
+    params: {page, size, search}
+  });
   return response.data;
 }

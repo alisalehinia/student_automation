@@ -31,8 +31,10 @@ axiosInstance.interceptors.request.use((config) => {
 // Handle 401 error
 axiosInstance.interceptors.response.use(
   (response) => {
-    if(response?.data?.status !==200){
-      if(response?.data?.status !==204) {
+    console.log('Response:', response);
+
+    if(response?.status !==200){
+      if(response?.status !==204) {
         toast.success(response?.data?.msg);
       } else {
         toast.success('با موفقیت پاک شد')
